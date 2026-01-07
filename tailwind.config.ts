@@ -57,6 +57,21 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        emerald: {
+          DEFAULT: "hsl(var(--emerald))",
+          foreground: "hsl(var(--emerald-foreground))",
+          muted: "hsl(var(--emerald-muted))",
+        },
+        slate: {
+          dark: "hsl(var(--slate-dark))",
+          medium: "hsl(var(--slate-medium))",
+          light: "hsl(var(--slate-light))",
+        },
+        chart: {
+          capital: "hsl(var(--chart-capital))",
+          interest: "hsl(var(--chart-interest))",
+          deposits: "hsl(var(--chart-deposits))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
