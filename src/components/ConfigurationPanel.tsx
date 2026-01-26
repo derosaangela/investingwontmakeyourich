@@ -19,6 +19,13 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
     });
   };
 
+  const handleNumericChange = (key: keyof CalculatorInputs, stringValue: string) => {
+    // Remove leading zeros and parse the number
+    const cleanedValue = stringValue.replace(/^0+(?=\d)/, '');
+    const numericValue = cleanedValue === '' ? 0 : Number(cleanedValue);
+    handleChange(key, numericValue);
+  };
+
   return (
     <Card className="h-fit shadow-lg border-border/50">
       <CardHeader className="pb-4">
@@ -38,10 +45,10 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
             <Input
               id="initialCapital"
-              type="number"
-              min={0}
-              value={inputs.initialCapital}
-              onChange={(e) => handleChange('initialCapital', Number(e.target.value))}
+              type="text"
+              inputMode="numeric"
+              value={inputs.initialCapital === 0 ? '' : inputs.initialCapital}
+              onChange={(e) => handleNumericChange('initialCapital', e.target.value.replace(/[^0-9]/g, ''))}
               className="pl-8 h-11"
               placeholder="10,000"
             />
@@ -58,10 +65,10 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
             <Input
               id="monthlyDeposit"
-              type="number"
-              min={0}
-              value={inputs.monthlyDeposit}
-              onChange={(e) => handleChange('monthlyDeposit', Number(e.target.value))}
+              type="text"
+              inputMode="numeric"
+              value={inputs.monthlyDeposit === 0 ? '' : inputs.monthlyDeposit}
+              onChange={(e) => handleNumericChange('monthlyDeposit', e.target.value.replace(/[^0-9]/g, ''))}
               className="pl-8 h-11"
               placeholder="500"
             />
@@ -76,10 +83,10 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
           </Label>
           <div className="flex gap-3">
             <Input
-              type="number"
-              min={1}
-              value={inputs.investmentPeriod}
-              onChange={(e) => handleChange('investmentPeriod', Number(e.target.value))}
+              type="text"
+              inputMode="numeric"
+              value={inputs.investmentPeriod === 0 ? '' : inputs.investmentPeriod}
+              onChange={(e) => handleNumericChange('investmentPeriod', e.target.value.replace(/[^0-9]/g, ''))}
               className="h-11 flex-1"
               placeholder="10"
             />
