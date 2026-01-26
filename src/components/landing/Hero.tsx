@@ -1,4 +1,4 @@
-import { ArrowRight, TrendingUp, Shield, BarChart3 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface HeroProps {
@@ -7,81 +7,76 @@ interface HeroProps {
 
 export function Hero({ onGetStarted }: HeroProps) {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Background Pattern */}
+    <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
+      {/* Subtle gradient orbs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-40" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-secondary/50 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/[0.015] rounded-full blur-[100px]" />
       </div>
 
-      <div className="container mx-auto px-6 py-24">
+      <div className="container mx-auto px-6 py-32">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card mb-8">
-            <span className="w-2 h-2 rounded-full bg-foreground animate-pulse" />
-            <span className="text-sm font-medium">Trusted by 10,000+ investors worldwide</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-10">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+            <span className="text-xs font-medium tracking-wide text-white/60 uppercase">Trusted by investors worldwide</span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-            Build Wealth with
-            <span className="block mt-2">Compound Growth</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[0.95]">
+            <span className="gradient-text">Grow your</span>
+            <br />
+            <span className="text-white">wealth</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Calculate your investment returns with precision. Visualize how your money grows over time with our professional compound interest calculator.
+          <p className="text-lg md:text-xl text-white/50 max-w-xl mx-auto mb-12 leading-relaxed font-light">
+            Visualize compound growth. Plan your future with precision.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button 
               size="lg" 
               onClick={onGetStarted}
-              className="h-14 px-8 text-base font-semibold group"
+              className="h-12 px-8 text-sm font-medium rounded-full bg-white text-black hover:bg-white/90 transition-all group"
             >
-              Start Calculating
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              Start calculating
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
             <Button 
-              variant="outline" 
+              variant="ghost" 
               size="lg" 
-              className="h-14 px-8 text-base font-semibold"
+              className="h-12 px-8 text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 rounded-full"
             >
-              Learn More
+              Learn more
             </Button>
           </div>
+        </div>
 
-          {/* Trust Indicators */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-            <div className="flex flex-col items-center gap-3 p-6">
-              <div className="p-3 rounded-full bg-secondary">
-                <TrendingUp className="h-6 w-6" />
-              </div>
-              <h3 className="font-semibold">Precise Calculations</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Industry-standard AER formulas for accurate projections
-              </p>
+        {/* Stats */}
+        <div className="max-w-3xl mx-auto mt-32">
+          <div className="grid grid-cols-3 gap-8">
+            <div className="text-center">
+              <p className="text-3xl md:text-4xl font-bold tracking-tight">$2.4B+</p>
+              <p className="text-xs md:text-sm text-white/40 mt-2 uppercase tracking-wider">Calculated</p>
             </div>
-            <div className="flex flex-col items-center gap-3 p-6">
-              <div className="p-3 rounded-full bg-secondary">
-                <BarChart3 className="h-6 w-6" />
-              </div>
-              <h3 className="font-semibold">Visual Analytics</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Interactive charts to understand your growth trajectory
-              </p>
+            <div className="text-center border-x border-white/10">
+              <p className="text-3xl md:text-4xl font-bold tracking-tight">50K+</p>
+              <p className="text-xs md:text-sm text-white/40 mt-2 uppercase tracking-wider">Users</p>
             </div>
-            <div className="flex flex-col items-center gap-3 p-6">
-              <div className="p-3 rounded-full bg-secondary">
-                <Shield className="h-6 w-6" />
-              </div>
-              <h3 className="font-semibold">Tax Considerations</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Factor in tax rates for realistic net returns
-              </p>
+            <div className="text-center">
+              <p className="text-3xl md:text-4xl font-bold tracking-tight">99.9%</p>
+              <p className="text-xs md:text-sm text-white/40 mt-2 uppercase tracking-wider">Accuracy</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1.5">
+          <div className="w-1 h-2 bg-white/40 rounded-full animate-bounce" />
         </div>
       </div>
     </section>

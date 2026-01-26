@@ -1,64 +1,49 @@
-import { Calculator, LineChart, PiggyBank, Clock, Percent, Wallet } from 'lucide-react';
+import { TrendingUp, Calculator, Clock } from 'lucide-react';
 
 const features = [
   {
     icon: Calculator,
-    title: 'Compound Interest Calculator',
-    description: 'Calculate how your investments grow over time with monthly compounding and regular contributions.',
+    title: 'Compound Interest',
+    description: 'Calculate growth with monthly compounding and regular contributions.',
   },
   {
-    icon: LineChart,
-    title: 'Growth Visualization',
-    description: 'Interactive charts showing the breakdown of your capital, deposits, and interest earned.',
-  },
-  {
-    icon: PiggyBank,
-    title: 'Monthly Contributions',
-    description: 'See how regular monthly deposits accelerate your wealth-building journey.',
+    icon: TrendingUp,
+    title: 'Visual Analytics',
+    description: 'Interactive charts showing capital, deposits, and interest breakdown.',
   },
   {
     icon: Clock,
-    title: 'Flexible Time Periods',
-    description: 'Plan for any investment horizon, from months to decades.',
-  },
-  {
-    icon: Percent,
-    title: 'Tax Calculations',
-    description: 'Factor in capital gains tax to see your realistic net returns.',
-  },
-  {
-    icon: Wallet,
-    title: 'Detailed Breakdown',
-    description: 'Month-by-month analysis of your investment growth and interest accumulation.',
+    title: 'Flexible Planning',
+    description: 'Model any investment horizon from months to decades.',
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="py-24 bg-secondary/30">
+    <section id="features" className="py-32 border-t border-white/5">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Everything You Need to Plan Your Future
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Professional-grade tools to help you understand and maximize your investment returns.
-          </p>
-        </div>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-4">Features</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Built for precision
+            </h2>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="group p-8 bg-card rounded-xl border border-border hover:border-foreground/20 transition-all duration-300"
-            >
-              <div className="p-3 rounded-lg bg-secondary w-fit mb-6 group-hover:bg-foreground group-hover:text-background transition-colors">
-                <feature.icon className="h-6 w-6" />
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300"
+              >
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-6">
+                  <feature.icon className="h-5 w-5 text-white/70" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 tracking-tight">{feature.title}</h3>
+                <p className="text-sm text-white/40 leading-relaxed">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

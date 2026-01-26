@@ -20,27 +20,30 @@ export function CalculatorSection() {
   const result = useMemo(() => calculateCompoundInterest(inputs), [inputs]);
 
   return (
-    <section id="calculator" className="py-24">
+    <section id="calculator" className="py-32 border-t border-white/5">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Compound Interest Calculator
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Enter your investment details below to see how your money can grow over time.
-          </p>
-        </div>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-4">Calculator</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+              Plan your growth
+            </h2>
+            <p className="text-white/40 max-w-md mx-auto">
+              Enter your investment details to visualize compound growth over time.
+            </p>
+          </div>
 
-        <div className="grid lg:grid-cols-[340px_1fr] gap-8 max-w-7xl mx-auto">
-          {/* Configuration Panel */}
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <ConfigurationPanel inputs={inputs} onInputChange={setInputs} />
-          </aside>
+          <div className="grid lg:grid-cols-[320px_1fr] gap-8">
+            {/* Configuration Panel */}
+            <aside>
+              <ConfigurationPanel inputs={inputs} onInputChange={setInputs} />
+            </aside>
 
-          {/* Results */}
-          <div className="space-y-8">
-            <GrowthChart data={result.monthlyData} initialCapital={inputs.initialCapital} />
-            <SummaryCard result={result} />
+            {/* Results */}
+            <div className="space-y-6">
+              <GrowthChart data={result.monthlyData} initialCapital={inputs.initialCapital} />
+              <SummaryCard result={result} />
+            </div>
           </div>
         </div>
       </div>

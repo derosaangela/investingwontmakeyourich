@@ -19,33 +19,25 @@ interface GrowthChartProps {
   initialCapital: number;
 }
 
-function CustomTooltip({ active, payload, label }: TooltipProps<number, string>) {
+function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   if (!active || !payload || !payload.length) return null;
 
   const data = payload[0]?.payload as MonthlyBreakdown;
   if (!data) return null;
 
   return (
-    <div className="bg-card border border-border rounded-lg shadow-xl p-4 min-w-[200px]">
-      <p className="font-semibold text-foreground mb-3 pb-2 border-b border-border">
+    <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl p-4 min-w-[180px]">
+      <p className="text-xs text-white/40 uppercase tracking-wider mb-3">
         Month {data.month}
       </p>
-      <div className="space-y-2 text-sm">
-        <div className="flex justify-between gap-4">
-          <span className="text-muted-foreground">Opening Balance</span>
-          <span className="font-medium">{formatCurrency(data.openingBalance)}</span>
+      <div className="space-y-2">
+        <div className="flex justify-between gap-4 text-sm">
+          <span className="text-white/50">Balance</span>
+          <span className="font-medium">{formatCurrency(data.closingBalance)}</span>
         </div>
-        <div className="flex justify-between gap-4">
-          <span className="text-muted-foreground">Monthly Deposit</span>
-          <span className="font-medium">{formatCurrency(data.depositAmount)}</span>
-        </div>
-        <div className="flex justify-between gap-4">
-          <span className="text-muted-foreground">Interest Earned</span>
-          <span className="font-medium text-emerald">{formatCurrency(data.interestEarned)}</span>
-        </div>
-        <div className="flex justify-between gap-4 pt-2 border-t border-border">
-          <span className="text-foreground font-medium">Ending Balance</span>
-          <span className="font-semibold">{formatCurrency(data.closingBalance)}</span>
+        <div className="flex justify-between gap-4 text-sm">
+          <span className="text-white/50">Interest</span>
+          <span className="font-medium text-white/70">{formatCurrency(data.interestEarned)}</span>
         </div>
       </div>
     </div>
@@ -68,15 +60,15 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
   }, [data]);
 
   return (
-    <Card className="border-border bg-card">
+    <Card className="rounded-2xl border-white/5 bg-white/[0.02]">
       <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <TrendingUp className="h-5 w-5" />
-          Growth Visualization
+        <CardTitle className="flex items-center gap-2 text-base font-medium">
+          <TrendingUp className="h-4 w-4 text-white/50" />
+          Growth
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[350px] w-full">
+        <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={chartData}
@@ -84,30 +76,30 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
             >
               <defs>
                 <linearGradient id="colorCapital" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--chart-capital))" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="hsl(var(--chart-capital))" stopOpacity={0.05} />
+                  <stop offset="5%" stopColor="rgba(255,255,255,0.15)" stopOpacity={1} />
+                  <stop offset="95%" stopColor="rgba(255,255,255,0)" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorDeposits" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--chart-deposits))" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="hsl(var(--chart-deposits))" stopOpacity={0.1} />
+                  <stop offset="5%" stopColor="rgba(255,255,255,0.25)" stopOpacity={1} />
+                  <stop offset="95%" stopColor="rgba(255,255,255,0.05)" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorInterest" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--chart-interest))" stopOpacity={0.6} />
-                  <stop offset="95%" stopColor="hsl(var(--chart-interest))" stopOpacity={0.1} />
+                  <stop offset="5%" stopColor="rgba(255,255,255,0.5)" stopOpacity={1} />
+                  <stop offset="95%" stopColor="rgba(255,255,255,0.1)" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
               <XAxis
                 dataKey="month"
-                stroke="hsl(var(--muted-foreground))"
-                fontSize={12}
+                stroke="rgba(255,255,255,0.2)"
+                fontSize={10}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value) => `M${value}`}
+                tickFormatter={(value) => `${value}`}
               />
               <YAxis
-                stroke="hsl(var(--muted-foreground))"
-                fontSize={12}
+                stroke="rgba(255,255,255,0.2)"
+                fontSize={10}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => formatCurrencyCompact(value)}
@@ -118,9 +110,8 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
                 type="monotone"
                 dataKey="startingCapital"
                 stackId="1"
-                stroke="hsl(var(--chart-capital))"
+                stroke="transparent"
                 fill="url(#colorCapital)"
-                strokeWidth={0}
                 animationDuration={800}
                 animationBegin={0}
               />
@@ -128,9 +119,8 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
                 type="monotone"
                 dataKey="depositsOnTop"
                 stackId="1"
-                stroke="hsl(var(--chart-deposits))"
+                stroke="transparent"
                 fill="url(#colorDeposits)"
-                strokeWidth={0}
                 animationDuration={800}
                 animationBegin={200}
               />
@@ -138,9 +128,9 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
                 type="monotone"
                 dataKey="interestOnTop"
                 stackId="1"
-                stroke="hsl(var(--chart-interest))"
+                stroke="rgba(255,255,255,0.6)"
+                strokeWidth={1.5}
                 fill="url(#colorInterest)"
-                strokeWidth={2}
                 animationDuration={800}
                 animationBegin={400}
               />
@@ -149,18 +139,18 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
         </div>
         
         {/* Legend */}
-        <div className="flex flex-wrap items-center justify-center gap-6 mt-4 pt-4 border-t border-border">
+        <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-white/5">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-sm bg-chart-capital" />
-            <span className="text-sm text-muted-foreground">Initial Capital</span>
+            <div className="w-2 h-2 rounded-full bg-white/20" />
+            <span className="text-xs text-white/40">Capital</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-sm bg-chart-deposits" />
-            <span className="text-sm text-muted-foreground">Deposits</span>
+            <div className="w-2 h-2 rounded-full bg-white/40" />
+            <span className="text-xs text-white/40">Deposits</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-sm bg-chart-interest" />
-            <span className="text-sm text-muted-foreground">Interest</span>
+            <div className="w-2 h-2 rounded-full bg-white/70" />
+            <span className="text-xs text-white/40">Interest</span>
           </div>
         </div>
       </CardContent>

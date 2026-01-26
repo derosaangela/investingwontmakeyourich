@@ -1,45 +1,28 @@
-import { TrendingUp } from 'lucide-react';
-
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+    <footer className="border-t border-white/5 py-12">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-foreground">
-                <TrendingUp className="h-5 w-5 text-background" />
-              </div>
-              <span className="text-xl font-bold tracking-tight">Nexus Capital</span>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-md bg-white flex items-center justify-center">
+              <span className="text-black font-bold text-xs">N</span>
             </div>
-            <p className="text-muted-foreground max-w-sm leading-relaxed">
-              Professional compound interest calculator for investors who want to understand their long-term wealth growth.
-            </p>
+            <span className="text-sm font-medium">nexus</span>
           </div>
 
           {/* Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Tools</h4>
-            <ul className="space-y-3 text-muted-foreground">
-              <li><a href="#calculator" className="hover:text-foreground transition-colors">Calculator</a></li>
-              <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Documentation</a></li>
-            </ul>
-          </div>
+          <nav className="flex items-center gap-8 text-sm text-white/40">
+            <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <a href="#calculator" className="hover:text-white transition-colors">Calculator</a>
+            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms</a>
+          </nav>
 
-          <div>
-            <h4 className="font-semibold mb-4">Company</h4>
-            <ul className="space-y-3 text-muted-foreground">
-              <li><a href="#about" className="hover:text-foreground transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Privacy</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Terms</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-border mt-12 pt-8 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Nexus Capital. Calculations are for illustrative purposes only.</p>
+          {/* Copyright */}
+          <p className="text-xs text-white/30">
+            © {new Date().getFullYear()} Nexus. For illustrative purposes.
+          </p>
         </div>
       </div>
     </footer>
