@@ -2,103 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Professional Investment Company Design System - Minimal Black & White */
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 9% 12%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 9% 12%;
+    --card-foreground: 0 0% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 9% 12%;
+    --popover-foreground: 0 0% 8%;
 
-    --primary: 220 9% 12%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 9% 12%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 220 14% 96%;
-    --accent-foreground: 220 9% 12%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 220 9% 12%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 8%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Custom financial tokens */
+    /* Custom financial tokens - minimal palette */
     --emerald: 160 84% 39%;
     --emerald-foreground: 0 0% 100%;
-    --emerald-muted: 160 60% 95%;
+    --emerald-muted: 160 30% 96%;
     
-    --slate-dark: 220 9% 12%;
-    --slate-medium: 220 9% 46%;
-    --slate-light: 220 14% 96%;
+    --slate-dark: 0 0% 8%;
+    --slate-medium: 0 0% 45%;
+    --slate-light: 0 0% 96%;
     
-    --chart-capital: 220 9% 46%;
-    --chart-interest: 160 84% 39%;
-    --chart-deposits: 220 14% 75%;
+    --chart-capital: 0 0% 65%;
+    --chart-interest: 0 0% 25%;
+    --chart-deposits: 0 0% 85%;
     
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 9% 12%;
-    --sidebar-primary: 220 9% 12%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 220 14% 96%;
-    --sidebar-accent-foreground: 220 9% 12%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 220 9% 12%;
+    --sidebar-foreground: 0 0% 8%;
+    --sidebar-primary: 0 0% 8%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 8%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 8%;
   }
 
   .dark {
-    --background: 220 9% 6%;
+    --background: 0 0% 4%;
     --foreground: 0 0% 98%;
 
-    --card: 220 9% 10%;
+    --card: 0 0% 8%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 220 9% 10%;
+    --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 0 0% 98%;
-    --primary-foreground: 220 9% 12%;
+    --primary-foreground: 0 0% 8%;
 
-    --secondary: 220 9% 16%;
+    --secondary: 0 0% 14%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 9% 16%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 220 9% 16%;
+    --accent: 0 0% 14%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 9% 20%;
-    --input: 220 9% 20%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
     --ring: 0 0% 98%;
     
-    --emerald-muted: 160 60% 15%;
+    --emerald-muted: 160 30% 12%;
     
-    --sidebar-background: 220 9% 10%;
+    --chart-capital: 0 0% 45%;
+    --chart-interest: 0 0% 75%;
+    --chart-deposits: 0 0% 30%;
+    
+    --sidebar-background: 0 0% 8%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 220 9% 12%;
-    --sidebar-accent: 220 9% 16%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 14%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 220 9% 20%;
+    --sidebar-border: 0 0% 18%;
     --sidebar-ring: 0 0% 98%;
   }
 }
@@ -109,6 +111,17 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-semibold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

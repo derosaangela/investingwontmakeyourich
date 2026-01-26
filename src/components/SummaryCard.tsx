@@ -13,27 +13,27 @@ export function SummaryCard({ result }: SummaryCardProps) {
       label: 'Total Invested',
       value: result.totalInvested,
       icon: DollarSign,
-      colorClass: 'text-slate-medium',
-      bgClass: 'bg-slate-light',
+      colorClass: 'text-muted-foreground',
+      bgClass: 'bg-secondary',
     },
     {
       label: 'Total Interest Gained',
       value: result.totalInterest,
       icon: TrendingUp,
-      colorClass: 'text-emerald',
-      bgClass: 'bg-emerald-muted',
+      colorClass: 'text-foreground',
+      bgClass: 'bg-secondary',
     },
     {
       label: 'Final Balance',
       value: result.finalBalance,
       icon: PiggyBank,
       colorClass: 'text-foreground',
-      bgClass: 'bg-secondary',
+      bgClass: 'bg-foreground text-background',
     },
   ];
 
   return (
-    <Card className="shadow-lg border-border/50">
+    <Card className="border-border bg-card">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-lg font-semibold">
           <PiggyBank className="h-5 w-5" />
