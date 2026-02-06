@@ -28,27 +28,27 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
   return (
     <Card className="h-fit rounded-2xl border-white/5 bg-white/[0.02]">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-base font-medium">
-          <TrendingUp className="h-4 w-4 text-white/50" />
+        <CardTitle className="flex items-center gap-2 text-lg font-medium">
+          <TrendingUp className="h-5 w-5 text-white/50" />
           Configuration
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Initial Capital */}
         <div className="space-y-2">
-          <Label htmlFor="initialCapital" className="flex items-center gap-2 text-xs font-medium text-white/60">
-            <DollarSign className="h-3 w-3" />
+          <Label htmlFor="initialCapital" className="flex items-center gap-2 text-sm font-medium text-white/60">
+            <DollarSign className="h-3.5 w-3.5" />
             Initial Capital
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-sm">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-base">$</span>
             <Input
               id="initialCapital"
               type="text"
               inputMode="numeric"
               value={inputs.initialCapital === 0 ? '' : inputs.initialCapital}
               onChange={(e) => handleNumericChange('initialCapital', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
+              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-base"
               placeholder="10,000"
             />
           </div>
@@ -56,19 +56,19 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Monthly Deposit */}
         <div className="space-y-2">
-          <Label htmlFor="monthlyDeposit" className="flex items-center gap-2 text-xs font-medium text-white/60">
-            <DollarSign className="h-3 w-3" />
+          <Label htmlFor="monthlyDeposit" className="flex items-center gap-2 text-sm font-medium text-white/60">
+            <DollarSign className="h-3.5 w-3.5" />
             Monthly Deposit
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-sm">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-base">$</span>
             <Input
               id="monthlyDeposit"
               type="text"
               inputMode="numeric"
               value={inputs.monthlyDeposit === 0 ? '' : inputs.monthlyDeposit}
               onChange={(e) => handleNumericChange('monthlyDeposit', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
+              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-base"
               placeholder="500"
             />
           </div>
@@ -76,8 +76,8 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Investment Period */}
         <div className="space-y-2">
-          <Label className="flex items-center gap-2 text-xs font-medium text-white/60">
-            <Calendar className="h-3 w-3" />
+          <Label className="flex items-center gap-2 text-sm font-medium text-white/60">
+            <Calendar className="h-3.5 w-3.5" />
             Investment Period
           </Label>
           <div className="flex gap-2">
@@ -86,14 +86,14 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               inputMode="numeric"
               value={inputs.investmentPeriod === 0 ? '' : inputs.investmentPeriod}
               onChange={(e) => handleNumericChange('investmentPeriod', e.target.value.replace(/[^0-9]/g, ''))}
-              className="h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm flex-1"
+              className="h-10 bg-white/[0.03] border-white/10 rounded-xl text-base flex-1"
               placeholder="10"
             />
             <Select
               value={inputs.periodType}
               onValueChange={(value) => handleChange('periodType', value)}
             >
-              <SelectTrigger className="w-24 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm">
+              <SelectTrigger className="w-24 h-10 bg-white/[0.03] border-white/10 rounded-xl text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-black border-white/10">
@@ -106,12 +106,12 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Yearly Interest Rate */}
         <div className="space-y-3">
-          <Label className="flex items-center justify-between text-xs font-medium text-white/60">
+          <Label className="flex items-center justify-between text-sm font-medium text-white/60">
             <span className="flex items-center gap-2">
-              <Percent className="h-3 w-3" />
+              <Percent className="h-3.5 w-3.5" />
               Interest Rate (AER)
             </span>
-            <span className="text-white font-medium">{inputs.yearlyRate}%</span>
+            <span className="text-white font-medium text-base">{inputs.yearlyRate}%</span>
           </Label>
           <Slider
             value={[inputs.yearlyRate]}
@@ -129,12 +129,12 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Tax Rate */}
         <div className="space-y-3">
-          <Label className="flex items-center justify-between text-xs font-medium text-white/60">
+          <Label className="flex items-center justify-between text-sm font-medium text-white/60">
             <span className="flex items-center gap-2">
-              <Percent className="h-3 w-3" />
+              <Percent className="h-3.5 w-3.5" />
               Tax Rate
             </span>
-            <span className="text-white/60">{inputs.taxRate}%</span>
+            <span className="text-white/60 text-base">{inputs.taxRate}%</span>
           </Label>
           <Slider
             value={[inputs.taxRate]}
