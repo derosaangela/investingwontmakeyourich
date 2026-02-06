@@ -28,7 +28,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
   return (
     <Card className="h-fit rounded-2xl border-white/5 bg-white/[0.02]">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-base font-medium">
+        <CardTitle className="flex items-center gap-2 text-lg font-medium">
           <TrendingUp className="h-4 w-4 text-white/50" />
           Configuration
         </CardTitle>
@@ -36,7 +36,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
       <CardContent className="space-y-6">
         {/* Initial Capital */}
         <div className="space-y-2">
-          <Label htmlFor="initialCapital" className="flex items-center gap-2 text-xs font-medium text-white/60">
+          <Label htmlFor="initialCapital" className="flex items-center gap-2 text-sm font-medium text-white/60">
             <DollarSign className="h-3 w-3" />
             Initial Capital
           </Label>
@@ -56,7 +56,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Monthly Deposit */}
         <div className="space-y-2">
-          <Label htmlFor="monthlyDeposit" className="flex items-center gap-2 text-xs font-medium text-white/60">
+          <Label htmlFor="monthlyDeposit" className="flex items-center gap-2 text-sm font-medium text-white/60">
             <DollarSign className="h-3 w-3" />
             Monthly Deposit
           </Label>
@@ -76,7 +76,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Investment Period */}
         <div className="space-y-2">
-          <Label className="flex items-center gap-2 text-xs font-medium text-white/60">
+          <Label className="flex items-center gap-2 text-sm font-medium text-white/60">
             <Calendar className="h-3 w-3" />
             Investment Period
           </Label>
@@ -106,7 +106,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Yearly Interest Rate */}
         <div className="space-y-3">
-          <Label className="flex items-center justify-between text-xs font-medium text-white/60">
+          <Label className="flex items-center justify-between text-sm font-medium text-white/60">
             <span className="flex items-center gap-2">
               <Percent className="h-3 w-3" />
               Interest Rate (AER)
@@ -129,7 +129,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
 
         {/* Tax Rate */}
         <div className="space-y-3">
-          <Label className="flex items-center justify-between text-xs font-medium text-white/60">
+          <Label className="flex items-center justify-between text-sm font-medium text-white/60">
             <span className="flex items-center gap-2">
               <Percent className="h-3 w-3" />
               Tax Rate
