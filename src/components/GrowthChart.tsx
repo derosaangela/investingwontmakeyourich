@@ -111,7 +111,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
                 }
               />
               <YAxis
-                stroke="rgba(255,255,255,0.2)"
+                stroke="rgba(255,255,255,0.6)"
                 fontSize={10}
                 tickLine={false}
                 axisLine={false}
