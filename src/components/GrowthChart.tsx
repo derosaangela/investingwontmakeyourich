@@ -17,7 +17,6 @@ import { formatCurrency, formatCurrencyCompact } from '@/utils/calculations';
 interface GrowthChartProps {
   data: MonthlyBreakdown[];
   initialCapital: number;
-  periodType: 'months' | 'years';
 }
 
 function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
@@ -45,16 +44,15 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   );
 }
 
-export function GrowthChart({ data, initialCapital, periodType }: GrowthChartProps) {
+export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
   const chartData = useMemo(() => {
     return data.map((item) => ({
       ...item,
       startingCapital: initialCapital,
       depositsOnTop: item.totalDeposits - initialCapital,
       interestOnTop: item.cumulativeInterest,
-      label: periodType === 'years' ? item.month / 12 : item.month,
     }));
-  }, [data, initialCapital, periodType]);
+  }, [data, initialCapital]);
 
   const maxValue = useMemo(() => {
     if (data.length === 0) return 10000;
@@ -97,15 +95,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
                 fontSize={10}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value) => {
-                  if (periodType === 'years') {
-                    const year = value / 12;
-                    if (Number.isInteger(year)) return `${year}y`;
-                    return '';
-                  }
-                  return `${value}`;
-                }}
-                interval={periodType === 'years' ? 11 : 'preserveStartEnd'}
+                tickFormatter={(value) => `${value}`}
               />
               <YAxis
                 stroke="rgba(255,255,255,0.2)"
