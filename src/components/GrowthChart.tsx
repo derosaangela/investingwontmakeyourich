@@ -98,12 +98,15 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
                 axisLine={false}
                 tickFormatter={(value) => {
                   if (periodType === 'years') {
-                    if (value % 12 === 0) return `${value / 12}y`;
-                    return '';
+                    return `${value / 12}y`;
                   }
                   return `${value}`;
                 }}
-                interval={periodType === 'years' ? 11 : undefined}
+                ticks={
+                  periodType === 'years'
+                    ? Array.from({ length: Math.floor(data.length / 12) }, (_, i) => (i + 1) * 12)
+                    : undefined
+                }
               />
               <YAxis
                 stroke="rgba(255,255,255,0.2)"
