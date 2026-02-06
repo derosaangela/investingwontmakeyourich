@@ -100,7 +100,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
                 domain={[1, data.length]}
                 tickFormatter={(value) => {
                   if (periodType === 'years') {
-                    return `${value / 12}y`;
+                    return `${value / 12}`;
                   }
                   return `${value}`;
                 }}
