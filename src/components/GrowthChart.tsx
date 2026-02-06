@@ -73,7 +73,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={chartData}
-              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+              margin={{ top: 10, right: 10, left: 0, bottom: 20 }}
             >
               <defs>
                 <linearGradient id="colorCapital" x1="0" y1="0" x2="0" y2="1">
@@ -92,10 +92,12 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
               <XAxis
                 dataKey="month"
+                type="number"
                 stroke="rgba(255,255,255,0.6)"
-                fontSize={10}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
+                domain={[1, data.length]}
                 tickFormatter={(value) => {
                   if (periodType === 'years') {
                     return `${value / 12}y`;
