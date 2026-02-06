@@ -41,7 +41,7 @@ export function CalculatorSection() {
 
             {/* Results */}
             <div className="space-y-6">
-              <GrowthChart data={result.monthlyData} initialCapital={inputs.initialCapital} periodType={inputs.periodType} />
+              <GrowthChart data={result.monthlyData} initialCapital={inputs.initialCapital} />
               <SummaryCard result={result} />
             </div>
           </div>
