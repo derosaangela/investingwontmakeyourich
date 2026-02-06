@@ -41,14 +41,14 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
             Initial Capital
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-base md:text-lg">$</span>
-             <Input
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-sm">$</span>
+            <Input
               id="initialCapital"
               type="text"
               inputMode="numeric"
               value={inputs.initialCapital === 0 ? '' : inputs.initialCapital}
               onChange={(e) => handleNumericChange('initialCapital', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-11 bg-white/[0.03] border-white/10 rounded-xl text-base md:text-lg"
+              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
               placeholder="10,000"
             />
           </div>
@@ -61,14 +61,14 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
             Monthly Deposit
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-base md:text-lg">$</span>
-             <Input
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-sm">$</span>
+            <Input
               id="monthlyDeposit"
               type="text"
               inputMode="numeric"
               value={inputs.monthlyDeposit === 0 ? '' : inputs.monthlyDeposit}
               onChange={(e) => handleNumericChange('monthlyDeposit', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-11 bg-white/[0.03] border-white/10 rounded-xl text-base md:text-lg"
+              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
               placeholder="500"
             />
           </div>
@@ -86,14 +86,14 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               inputMode="numeric"
               value={inputs.investmentPeriod === 0 ? '' : inputs.investmentPeriod}
               onChange={(e) => handleNumericChange('investmentPeriod', e.target.value.replace(/[^0-9]/g, ''))}
-              className="h-11 bg-white/[0.03] border-white/10 rounded-xl text-base md:text-lg flex-1"
+              className="h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm flex-1"
               placeholder="10"
             />
             <Select
               value={inputs.periodType}
               onValueChange={(value) => handleChange('periodType', value)}
             >
-              <SelectTrigger className="w-28 h-11 bg-white/[0.03] border-white/10 rounded-xl text-base md:text-lg">
+              <SelectTrigger className="w-24 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-black border-white/10">
@@ -111,7 +111,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               <Percent className="h-3 w-3" />
               Interest Rate (AER)
             </span>
-            <span className="text-white font-medium text-base md:text-lg">{inputs.yearlyRate}%</span>
+            <span className="text-white font-medium">{inputs.yearlyRate}%</span>
           </Label>
           <Slider
             value={[inputs.yearlyRate]}
@@ -134,7 +134,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               <Percent className="h-3 w-3" />
               Tax Rate
             </span>
-            <span className="text-white/60 text-base md:text-lg">{inputs.taxRate}%</span>
+            <span className="text-white/60">{inputs.taxRate}%</span>
           </Label>
           <Slider
             value={[inputs.taxRate]}
