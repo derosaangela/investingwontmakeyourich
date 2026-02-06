@@ -17,6 +17,7 @@ import { formatCurrency, formatCurrencyCompact } from '@/utils/calculations';
 interface GrowthChartProps {
   data: MonthlyBreakdown[];
   initialCapital: number;
+  periodType: 'months' | 'years';
 }
 
 function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
@@ -28,7 +29,7 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   return (
     <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl p-4 min-w-[180px]">
       <p className="text-xs text-white/40 uppercase tracking-wider mb-3">
-        Month {data.month}
+        {data.month % 12 === 0 ? `Year ${data.month / 12}` : `Month ${data.month}`}
       </p>
       <div className="space-y-2">
         <div className="flex justify-between gap-4 text-sm">
@@ -44,7 +45,7 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   );
 }
 
-export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
+export function GrowthChart({ data, initialCapital, periodType }: GrowthChartProps) {
   const chartData = useMemo(() => {
     return data.map((item) => ({
       ...item,
@@ -95,7 +96,14 @@ export function GrowthChart({ data, initialCapital }: GrowthChartProps) {
                 fontSize={10}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value) => `${value}`}
+                tickFormatter={(value) => {
+                  if (periodType === 'years') {
+                    if (value % 12 === 0) return `${value / 12}y`;
+                    return '';
+                  }
+                  return `${value}`;
+                }}
+                interval={periodType === 'years' ? 11 : 'preserveStartEnd'}
               />
               <YAxis
                 stroke="rgba(255,255,255,0.2)"
