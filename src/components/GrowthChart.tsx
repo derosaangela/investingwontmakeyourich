@@ -92,7 +92,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
               <XAxis
                 dataKey="month"
-                stroke="rgba(255,255,255,0.2)"
+                stroke="rgba(255,255,255,0.6)"
                 fontSize={10}
                 tickLine={false}
                 axisLine={false}
