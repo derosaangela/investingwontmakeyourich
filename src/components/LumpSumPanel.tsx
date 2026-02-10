@@ -23,7 +23,7 @@ export function LumpSumPanel({ inputs, onInputChange }: LumpSumPanelProps) {
   };
 
   return (
-    <Card className="h-fit rounded-2xl border-white/5 bg-white/[0.02]">
+    <Card className="h-fit rounded-2xl glass liquid-shine">
       <CardContent className="pt-6 space-y-6">
         {/* Initial Capital */}
         <div className="space-y-2">
@@ -38,7 +38,7 @@ export function LumpSumPanel({ inputs, onInputChange }: LumpSumPanelProps) {
               inputMode="numeric"
               value={inputs.initialCapital === 0 ? '' : inputs.initialCapital}
               onChange={(e) => handleNumericChange('initialCapital', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
+              className="pl-7 h-10 glass-subtle border-white/[0.06] rounded-xl text-sm focus:border-white/20"
               placeholder="50,000"
             />
           </div>
@@ -56,14 +56,14 @@ export function LumpSumPanel({ inputs, onInputChange }: LumpSumPanelProps) {
               inputMode="numeric"
               value={inputs.investmentPeriod === 0 ? '' : inputs.investmentPeriod}
               onChange={(e) => handleNumericChange('investmentPeriod', e.target.value.replace(/[^0-9]/g, ''))}
-              className="h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm flex-1"
+              className="h-10 glass-subtle border-white/[0.06] rounded-xl text-sm flex-1 focus:border-white/20"
               placeholder="10"
             />
             <Select value={inputs.periodType} onValueChange={(value) => handleChange('periodType', value)}>
-              <SelectTrigger className="w-24 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm">
+              <SelectTrigger className="w-24 h-10 glass-subtle border-white/[0.06] rounded-xl text-sm">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-black border-white/10 z-50">
+              <SelectContent className="glass-strong border-white/10 z-50 rounded-xl">
                 <SelectItem value="years">Years</SelectItem>
                 <SelectItem value="months">Months</SelectItem>
               </SelectContent>
