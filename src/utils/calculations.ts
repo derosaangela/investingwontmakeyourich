@@ -14,8 +14,9 @@ export function calculateCompoundInterest(inputs: CalculatorInputs): Calculation
   const PMT = inputs.monthlyDeposit; // Monthly Contribution
   const r = inputs.yearlyRate / 100; // AER as decimal
   
-  // Monthly interest rate from AER: i = ((1 + r)^(1/12)) - 1
-  const i = Math.pow(1 + r, 1 / 12) - 1;
+  // Compounding frequency: monthly (n = 12)
+  const n = 12;
+  const rn = r / n; // r/n
   
   const monthlyData: MonthlyBreakdown[] = [];
   let currentBalance = P;
@@ -24,7 +25,7 @@ export function calculateCompoundInterest(inputs: CalculatorInputs): Calculation
   
   for (let month = 1; month <= totalMonths; month++) {
     const openingBalance = currentBalance;
-    const interestEarned = openingBalance * i;
+    const interestEarned = openingBalance * rn;
     const depositAmount = PMT;
     const closingBalance = openingBalance + interestEarned + depositAmount;
     
@@ -44,11 +45,10 @@ export function calculateCompoundInterest(inputs: CalculatorInputs): Calculation
     currentBalance = closingBalance;
   }
   
-  // Final calculation using the precise formula:
-  // Total = P * (1 + r)^t + PMT * ((1 + r)^t - 1) / ((1 + r)^(1/12) - 1)
-  const compoundFactor = Math.pow(1 + r, t);
-  const finalBalance = r > 0 && i > 0
-    ? (P * compoundFactor) + (PMT * ((compoundFactor - 1) / i))
+  // Final calculation: P*(1+r/n)^(n*t) + PMT*((1+r/n)^(n*t)-1)/(r/n)
+  const compoundFactor = Math.pow(1 + rn, n * t);
+  const finalBalance = rn > 0
+    ? (P * compoundFactor) + (PMT * ((compoundFactor - 1) / rn))
     : P + (PMT * totalMonths);
   
   const totalInvested = P + (PMT * totalMonths);
