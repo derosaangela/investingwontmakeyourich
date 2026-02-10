@@ -5,6 +5,7 @@ import { GoalBasedPanel } from '@/components/GoalBasedPanel';
 import { GrowthChart } from '@/components/GrowthChart';
 import { SummaryCard } from '@/components/SummaryCard';
 import { GoalSummaryCard } from '@/components/GoalSummaryCard';
+import { CompareView } from '@/components/CompareView';
 import { RecurringInputs, LumpSumInputs, GoalBasedInputs, CalculatorMode } from '@/types/calculator';
 import { calculateRecurring, calculateLumpSum, calculateGoalBased } from '@/utils/calculations';
 
@@ -37,6 +38,7 @@ const tabs: { key: CalculatorMode; label: string }[] = [
   { key: 'recurring', label: 'Recurring' },
   { key: 'lumpsum', label: 'Lump Sum' },
   { key: 'goal', label: 'Goal' },
+  { key: 'compare', label: 'Compare' },
 ];
 
 export function CalculatorSection() {
@@ -49,19 +51,19 @@ export function CalculatorSection() {
   const lumpSumResult = useMemo(() => calculateLumpSum(lumpSumInputs), [lumpSumInputs]);
   const goalResult = useMemo(() => calculateGoalBased(goalInputs), [goalInputs]);
 
-  const chartData = mode === 'recurring'
+  const chartData = mode === 'recurring' || mode === 'compare'
     ? recurringResult.monthlyData
     : mode === 'lumpsum'
     ? lumpSumResult.monthlyData
     : goalResult.monthlyData;
 
-  const initialCapital = mode === 'recurring'
+  const initialCapital = mode === 'recurring' || mode === 'compare'
     ? recurringInputs.initialCapital
     : mode === 'lumpsum'
     ? lumpSumInputs.initialCapital
     : goalInputs.initialCapital;
 
-  const periodType = mode === 'recurring'
+  const periodType = mode === 'recurring' || mode === 'compare'
     ? recurringInputs.periodType
     : mode === 'lumpsum'
     ? lumpSumInputs.periodType
@@ -98,30 +100,38 @@ export function CalculatorSection() {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-[320px_1fr] gap-8">
-            {/* Configuration Panel */}
-            <aside>
-              {mode === 'recurring' && (
-                <ConfigurationPanel inputs={recurringInputs} onInputChange={setRecurringInputs} />
-              )}
-              {mode === 'lumpsum' && (
-                <LumpSumPanel inputs={lumpSumInputs} onInputChange={setLumpSumInputs} />
-              )}
-              {mode === 'goal' && (
-                <GoalBasedPanel inputs={goalInputs} onInputChange={setGoalInputs} />
-              )}
-            </aside>
+          {mode === 'compare' ? (
+            <CompareView
+              recurringResult={recurringResult}
+              lumpSumResult={lumpSumResult}
+              goalResult={goalResult}
+            />
+          ) : (
+            <div className="grid lg:grid-cols-[320px_1fr] gap-8">
+              {/* Configuration Panel */}
+              <aside>
+                {mode === 'recurring' && (
+                  <ConfigurationPanel inputs={recurringInputs} onInputChange={setRecurringInputs} />
+                )}
+                {mode === 'lumpsum' && (
+                  <LumpSumPanel inputs={lumpSumInputs} onInputChange={setLumpSumInputs} />
+                )}
+                {mode === 'goal' && (
+                  <GoalBasedPanel inputs={goalInputs} onInputChange={setGoalInputs} />
+                )}
+              </aside>
 
-            {/* Results */}
-            <div className="space-y-6">
-              <GrowthChart data={chartData} initialCapital={initialCapital} periodType={periodType} />
-              {mode === 'goal' ? (
-                <GoalSummaryCard result={goalResult} />
-              ) : (
-                <SummaryCard result={mode === 'recurring' ? recurringResult : lumpSumResult} />
-              )}
+              {/* Results */}
+              <div className="space-y-6">
+                <GrowthChart data={chartData} initialCapital={initialCapital} periodType={periodType} />
+                {mode === 'goal' ? (
+                  <GoalSummaryCard result={goalResult} />
+                ) : (
+                  <SummaryCard result={mode === 'recurring' ? recurringResult : lumpSumResult} />
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
