@@ -26,7 +26,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
   };
 
   return (
-    <Card className="h-fit rounded-2xl glass liquid-shine">
+    <Card className="h-fit rounded-2xl border-white/5 bg-white/[0.02]">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-base font-medium">
           <TrendingUp className="h-4 w-4 text-white/50" />
@@ -48,7 +48,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               inputMode="numeric"
               value={inputs.initialCapital === 0 ? '' : inputs.initialCapital}
               onChange={(e) => handleNumericChange('initialCapital', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-10 glass-subtle border-white/[0.06] rounded-xl text-sm focus:border-white/20"
+              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
               placeholder="10,000"
             />
           </div>
@@ -68,7 +68,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               inputMode="numeric"
               value={inputs.monthlyDeposit === 0 ? '' : inputs.monthlyDeposit}
               onChange={(e) => handleNumericChange('monthlyDeposit', e.target.value.replace(/[^0-9]/g, ''))}
-              className="pl-7 h-10 glass-subtle border-white/[0.06] rounded-xl text-sm focus:border-white/20"
+              className="pl-7 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm"
               placeholder="500"
             />
           </div>
@@ -86,17 +86,17 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
               inputMode="numeric"
               value={inputs.investmentPeriod === 0 ? '' : inputs.investmentPeriod}
               onChange={(e) => handleNumericChange('investmentPeriod', e.target.value.replace(/[^0-9]/g, ''))}
-              className="h-10 glass-subtle border-white/[0.06] rounded-xl text-sm flex-1 focus:border-white/20"
+              className="h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm flex-1"
               placeholder="10"
             />
             <Select
               value={inputs.periodType}
               onValueChange={(value) => handleChange('periodType', value)}
             >
-              <SelectTrigger className="w-24 h-10 glass-subtle border-white/[0.06] rounded-xl text-sm">
+              <SelectTrigger className="w-24 h-10 bg-white/[0.03] border-white/10 rounded-xl text-sm">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="glass-strong border-white/10 rounded-xl">
+              <SelectContent className="bg-black border-white/10">
                 <SelectItem value="years">Years</SelectItem>
                 <SelectItem value="months">Months</SelectItem>
               </SelectContent>
@@ -121,7 +121,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
             step={0.5}
             className="py-2"
           />
-          <div className="flex justify-between text-[10px] text-white/25">
+          <div className="flex justify-between text-[10px] text-white/30">
             <span>0%</span>
             <span>30%</span>
           </div>
@@ -144,7 +144,7 @@ export function ConfigurationPanel({ inputs, onInputChange }: ConfigurationPanel
             step={1}
             className="py-2"
           />
-          <div className="flex justify-between text-[10px] text-white/25">
+          <div className="flex justify-between text-[10px] text-white/30">
             <span>0%</span>
             <span>50%</span>
           </div>

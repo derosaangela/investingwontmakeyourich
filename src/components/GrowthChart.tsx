@@ -27,7 +27,7 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   if (!data) return null;
 
   return (
-    <div className="glass-strong rounded-xl p-4 min-w-[180px]">
+    <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl p-4 min-w-[180px]">
       <p className="text-xs text-white/40 uppercase tracking-wider mb-3">
         Month {data.month}
       </p>
@@ -61,7 +61,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
   }, [data]);
 
   return (
-    <Card className="rounded-2xl glass liquid-shine">
+    <Card className="rounded-2xl border-white/5 bg-white/[0.02]">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-base font-medium">
           <TrendingUp className="h-4 w-4 text-white/50" />
@@ -77,19 +77,19 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
             >
               <defs>
                 <linearGradient id="colorCapital" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="rgba(255,255,255,0.12)" stopOpacity={1} />
+                  <stop offset="5%" stopColor="rgba(255,255,255,0.15)" stopOpacity={1} />
                   <stop offset="95%" stopColor="rgba(255,255,255,0)" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorDeposits" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="rgba(255,255,255,0.22)" stopOpacity={1} />
-                  <stop offset="95%" stopColor="rgba(255,255,255,0.03)" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorInterest" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="rgba(255,255,255,0.45)" stopOpacity={1} />
+                  <stop offset="5%" stopColor="rgba(255,255,255,0.25)" stopOpacity={1} />
                   <stop offset="95%" stopColor="rgba(255,255,255,0.05)" stopOpacity={0} />
                 </linearGradient>
+                <linearGradient id="colorInterest" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="rgba(255,255,255,0.5)" stopOpacity={1} />
+                  <stop offset="95%" stopColor="rgba(255,255,255,0.1)" stopOpacity={0} />
+                </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
               <XAxis
                 dataKey="month"
                 type="number"
@@ -141,7 +141,7 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
                 type="monotone"
                 dataKey="interestOnTop"
                 stackId="1"
-                stroke="rgba(255,255,255,0.5)"
+                stroke="rgba(255,255,255,0.6)"
                 strokeWidth={1.5}
                 fill="url(#colorInterest)"
                 animationDuration={800}
@@ -152,18 +152,18 @@ export function GrowthChart({ data, initialCapital, periodType }: GrowthChartPro
         </div>
         
         {/* Legend */}
-        <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-white/[0.04]">
+        <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-white/5">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-white/20" />
-            <span className="text-xs text-white/35">Capital</span>
+            <span className="text-xs text-white/40">Capital</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-white/40" />
-            <span className="text-xs text-white/35">Deposits</span>
+            <span className="text-xs text-white/40">Deposits</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-white/70" />
-            <span className="text-xs text-white/35">Interest</span>
+            <span className="text-xs text-white/40">Interest</span>
           </div>
         </div>
       </CardContent>
