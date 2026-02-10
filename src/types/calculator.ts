@@ -1,4 +1,4 @@
-export type CalculatorMode = 'recurring' | 'lumpsum' | 'goal';
+export type CalculatorMode = 'recurring' | 'lumpsum' | 'goal' | 'compare';
 
 export interface RecurringInputs {
   initialCapital: number;
