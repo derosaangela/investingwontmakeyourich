@@ -25,6 +25,9 @@ export function Header({ onGetStarted }: HeaderProps) {
             <a href="#calculator" className="text-sm text-white/50 hover:text-white transition-colors">
               Calculator
             </a>
+            <a href="#planning" className="text-sm text-white/50 hover:text-white transition-colors">
+              Planning
+            </a>
             <a href="#about" className="text-sm text-white/50 hover:text-white transition-colors">
               About
             </a>
