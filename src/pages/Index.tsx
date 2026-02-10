@@ -3,7 +3,7 @@ import { Header } from '@/components/landing/Header';
 import { Hero } from '@/components/landing/Hero';
 import { Features } from '@/components/landing/Features';
 import { CalculatorSection } from '@/components/landing/CalculatorSection';
-import { PlanningSection } from '@/components/landing/PlanningSection';
+
 import { Footer } from '@/components/landing/Footer';
 
 const Index = () => {
@@ -23,7 +23,7 @@ const Index = () => {
         <div ref={calculatorRef}>
           <CalculatorSection />
         </div>
-        <PlanningSection />
+        
       </main>
 
       <Footer />
