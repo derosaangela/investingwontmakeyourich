@@ -1,11 +1,14 @@
 import { useState, useMemo } from 'react';
 import { ConfigurationPanel } from '@/components/ConfigurationPanel';
+import { LumpSumPanel } from '@/components/LumpSumPanel';
+import { GoalBasedPanel } from '@/components/GoalBasedPanel';
 import { GrowthChart } from '@/components/GrowthChart';
 import { SummaryCard } from '@/components/SummaryCard';
-import { CalculatorInputs } from '@/types/calculator';
-import { calculateCompoundInterest } from '@/utils/calculations';
+import { GoalSummaryCard } from '@/components/GoalSummaryCard';
+import { RecurringInputs, LumpSumInputs, GoalBasedInputs, CalculatorMode } from '@/types/calculator';
+import { calculateRecurring, calculateLumpSum, calculateGoalBased } from '@/utils/calculations';
 
-const defaultInputs: CalculatorInputs = {
+const defaultRecurring: RecurringInputs = {
   initialCapital: 10000,
   monthlyDeposit: 500,
   investmentPeriod: 10,
@@ -14,10 +17,55 @@ const defaultInputs: CalculatorInputs = {
   taxRate: 0,
 };
 
-export function CalculatorSection() {
-  const [inputs, setInputs] = useState<CalculatorInputs>(defaultInputs);
+const defaultLumpSum: LumpSumInputs = {
+  initialCapital: 50000,
+  investmentPeriod: 10,
+  periodType: 'years',
+  yearlyRate: 8,
+  taxRate: 0,
+};
 
-  const result = useMemo(() => calculateCompoundInterest(inputs), [inputs]);
+const defaultGoal: GoalBasedInputs = {
+  targetAmount: 100000,
+  initialCapital: 5000,
+  investmentPeriod: 10,
+  periodType: 'years',
+  yearlyRate: 8,
+};
+
+const tabs: { key: CalculatorMode; label: string }[] = [
+  { key: 'recurring', label: 'Recurring' },
+  { key: 'lumpsum', label: 'Lump Sum' },
+  { key: 'goal', label: 'Goal' },
+];
+
+export function CalculatorSection() {
+  const [mode, setMode] = useState<CalculatorMode>('recurring');
+  const [recurringInputs, setRecurringInputs] = useState<RecurringInputs>(defaultRecurring);
+  const [lumpSumInputs, setLumpSumInputs] = useState<LumpSumInputs>(defaultLumpSum);
+  const [goalInputs, setGoalInputs] = useState<GoalBasedInputs>(defaultGoal);
+
+  const recurringResult = useMemo(() => calculateRecurring(recurringInputs), [recurringInputs]);
+  const lumpSumResult = useMemo(() => calculateLumpSum(lumpSumInputs), [lumpSumInputs]);
+  const goalResult = useMemo(() => calculateGoalBased(goalInputs), [goalInputs]);
+
+  const chartData = mode === 'recurring'
+    ? recurringResult.monthlyData
+    : mode === 'lumpsum'
+    ? lumpSumResult.monthlyData
+    : goalResult.monthlyData;
+
+  const initialCapital = mode === 'recurring'
+    ? recurringInputs.initialCapital
+    : mode === 'lumpsum'
+    ? lumpSumInputs.initialCapital
+    : goalInputs.initialCapital;
+
+  const periodType = mode === 'recurring'
+    ? recurringInputs.periodType
+    : mode === 'lumpsum'
+    ? lumpSumInputs.periodType
+    : goalInputs.periodType;
 
   return (
     <section id="calculator" className="py-32 border-t border-white/5">
@@ -28,21 +76,50 @@ export function CalculatorSection() {
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
               Plan your growth
             </h2>
-            <p className="text-white/40 max-w-md mx-auto">
+            <p className="text-white/40 max-w-md mx-auto mb-8">
               Enter your investment details to visualize compound growth over time.
             </p>
+
+            {/* Tabs */}
+            <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/5">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setMode(tab.key)}
+                  className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${
+                    mode === tab.key
+                      ? 'bg-white text-black'
+                      : 'text-white/50 hover:text-white/80'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-[320px_1fr] gap-8">
             {/* Configuration Panel */}
             <aside>
-              <ConfigurationPanel inputs={inputs} onInputChange={setInputs} />
+              {mode === 'recurring' && (
+                <ConfigurationPanel inputs={recurringInputs} onInputChange={setRecurringInputs} />
+              )}
+              {mode === 'lumpsum' && (
+                <LumpSumPanel inputs={lumpSumInputs} onInputChange={setLumpSumInputs} />
+              )}
+              {mode === 'goal' && (
+                <GoalBasedPanel inputs={goalInputs} onInputChange={setGoalInputs} />
+              )}
             </aside>
 
             {/* Results */}
             <div className="space-y-6">
-              <GrowthChart data={result.monthlyData} initialCapital={inputs.initialCapital} periodType={inputs.periodType} />
-              <SummaryCard result={result} />
+              <GrowthChart data={chartData} initialCapital={initialCapital} periodType={periodType} />
+              {mode === 'goal' ? (
+                <GoalSummaryCard result={goalResult} />
+              ) : (
+                <SummaryCard result={mode === 'recurring' ? recurringResult : lumpSumResult} />
+              )}
             </div>
           </div>
         </div>

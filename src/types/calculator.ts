@@ -1,4 +1,6 @@
-export interface CalculatorInputs {
+export type CalculatorMode = 'recurring' | 'lumpsum' | 'goal';
+
+export interface RecurringInputs {
   initialCapital: number;
   monthlyDeposit: number;
   investmentPeriod: number;
@@ -6,6 +8,25 @@ export interface CalculatorInputs {
   yearlyRate: number;
   taxRate: number;
 }
+
+export interface LumpSumInputs {
+  initialCapital: number;
+  investmentPeriod: number;
+  periodType: 'months' | 'years';
+  yearlyRate: number;
+  taxRate: number;
+}
+
+export interface GoalBasedInputs {
+  targetAmount: number;
+  investmentPeriod: number;
+  periodType: 'months' | 'years';
+  yearlyRate: number;
+  initialCapital: number;
+}
+
+// Keep backward compat alias
+export type CalculatorInputs = RecurringInputs;
 
 export interface MonthlyBreakdown {
   month: number;
@@ -25,4 +46,12 @@ export interface CalculationResult {
   taxAmount: number;
   taxRate: number;
   netBalance: number;
+}
+
+export interface GoalBasedResult {
+  requiredMonthlyDeposit: number;
+  totalInvested: number;
+  totalInterest: number;
+  finalBalance: number;
+  monthlyData: MonthlyBreakdown[];
 }
