@@ -81,15 +81,15 @@ export function CalculatorSection() {
             </p>
 
             {/* Tabs */}
-            <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/5">
+            <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl glass">
               {tabs.map((tab) => (
                 <button
                   key={tab.key}
                   onClick={() => setMode(tab.key)}
-                  className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                     mode === tab.key
-                      ? 'bg-white text-black'
-                      : 'text-white/50 hover:text-white/80'
+                      ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.15)]'
+                      : 'text-white/40 hover:text-white/70'
                   }`}
                 >
                   {tab.label}
