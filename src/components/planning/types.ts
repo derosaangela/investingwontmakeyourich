@@ -32,6 +32,9 @@ export interface PhaseResult {
   emergencyTarget: number;
   emergencyMonths: number;
   savingsGap: number;
+  monthlyEssentials: number;
+  currentSavings: number;
+  incomeStability: 'stable' | 'variable' | null;
 }
 
 export function evaluatePhase(answers: SurveyAnswers): PhaseResult {
@@ -168,6 +171,9 @@ function buildResult(
     emergencyTarget,
     emergencyMonths,
     savingsGap,
+    monthlyEssentials: answers.monthlyEssentials,
+    currentSavings: answers.currentSavings,
+    incomeStability: answers.incomeStability,
   };
 }
 
