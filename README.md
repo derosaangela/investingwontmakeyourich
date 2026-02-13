@@ -1,7 +1,6 @@
 # Investing won't make you rich
 
 Check how much you'll have if you start investing today
-Plan finances based on your goals
 
 ## Project info
 
