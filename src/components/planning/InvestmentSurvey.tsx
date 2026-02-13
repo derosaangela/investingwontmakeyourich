@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
-import { ArrowRight, ArrowLeft, CreditCard, PiggyBank, Landmark, TrendingUp } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CreditCard, PiggyBank, Landmark, TrendingUp, Shield } from 'lucide-react';
 import { SurveyAnswers, defaultAnswers } from './types';
 
 interface Props {
@@ -15,6 +15,7 @@ const STEPS = [
   { icon: PiggyBank, label: 'Savings' },
   { icon: Landmark, label: 'Cash' },
   { icon: TrendingUp, label: 'Investing' },
+  { icon: Shield, label: 'Risk' },
 ];
 
 export function InvestmentSurvey({ onComplete }: Props) {
@@ -34,13 +35,15 @@ export function InvestmentSurvey({ onComplete }: Props) {
         return answers.savingsAccountType !== null;
       case 3:
         return answers.investmentExperience !== null;
+      case 4:
+        return answers.riskTolerance !== null;
       default:
         return false;
     }
   };
 
   const next = () => {
-    if (step < 3) setStep(step + 1);
+    if (step < 4) setStep(step + 1);
     else onComplete(answers);
   };
 
@@ -48,7 +51,7 @@ export function InvestmentSurvey({ onComplete }: Props) {
     if (step > 0) setStep(step - 1);
   };
 
-  const progress = ((step + 1) / 4) * 100;
+  const progress = ((step + 1) / 5) * 100;
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -78,6 +81,7 @@ export function InvestmentSurvey({ onComplete }: Props) {
           {step === 1 && <SavingsStep answers={answers} update={update} />}
           {step === 2 && <CashStep answers={answers} update={update} />}
           {step === 3 && <InvestingStep answers={answers} update={update} />}
+          {step === 4 && <RiskStep answers={answers} update={update} />}
 
           <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/5">
             <Button
@@ -96,7 +100,7 @@ export function InvestmentSurvey({ onComplete }: Props) {
               disabled={!canProceed()}
               className="gap-2"
             >
-              {step === 3 ? 'See My Plan' : 'Continue'}
+              {step === 4 ? 'See My Plan' : 'Continue'}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
@@ -369,6 +373,55 @@ function InvestingStep({
             <p className="font-medium text-sm">No</p>
           </OptionButton>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Step 5: Risk Tolerance ---- */
+function RiskStep({
+  answers,
+  update,
+}: {
+  answers: SurveyAnswers;
+  update: <K extends keyof SurveyAnswers>(key: K, value: SurveyAnswers[K]) => void;
+}) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-xl font-semibold mb-2">What's your risk tolerance?</h3>
+        <p className="text-sm text-muted-foreground">
+          This determines the balance between stability and growth in your investment recommendations.
+        </p>
+      </div>
+      <div className="space-y-3">
+        <OptionButton
+          selected={answers.riskTolerance === 'conservative'}
+          onClick={() => update('riskTolerance', 'conservative')}
+        >
+          <p className="font-medium">Conservative</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Prioritise capital preservation. Lower returns but much less volatility. Mostly bonds with some equity.
+          </p>
+        </OptionButton>
+        <OptionButton
+          selected={answers.riskTolerance === 'balanced'}
+          onClick={() => update('riskTolerance', 'balanced')}
+        >
+          <p className="font-medium">Balanced</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            A mix of equities and bonds. Moderate growth with manageable ups and downs.
+          </p>
+        </OptionButton>
+        <OptionButton
+          selected={answers.riskTolerance === 'aggressive'}
+          onClick={() => update('riskTolerance', 'aggressive')}
+        >
+          <p className="font-medium">Aggressive</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Maximise long-term growth. Mostly or entirely equities. Higher volatility but historically higher returns.
+          </p>
+        </OptionButton>
       </div>
     </div>
   );

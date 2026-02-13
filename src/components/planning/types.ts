@@ -7,6 +7,7 @@ export interface SurveyAnswers {
   savingsAccountType: 'standard' | 'hysa' | 'none' | null;
   hasISA: 'yes' | 'no' | null;
   investmentExperience: 'none' | 'beginner' | 'intermediate' | null;
+  riskTolerance: 'conservative' | 'balanced' | 'aggressive' | null;
 }
 
 export const defaultAnswers: SurveyAnswers = {
@@ -18,6 +19,7 @@ export const defaultAnswers: SurveyAnswers = {
   savingsAccountType: null,
   hasISA: null,
   investmentExperience: null,
+  riskTolerance: null,
 };
 
 export interface PhaseResult {
@@ -35,6 +37,42 @@ export interface PhaseResult {
   monthlyEssentials: number;
   currentSavings: number;
   incomeStability: 'stable' | 'variable' | null;
+  riskTolerance: 'conservative' | 'balanced' | 'aggressive' | null;
+}
+
+function getPhase4Actions(answers: SurveyAnswers): string[] {
+  const base = ['Open a Stocks & Shares ISA (£20,000/year tax-free allowance)'];
+
+  if (answers.riskTolerance === 'conservative') {
+    base.push(
+      'Focus on bond-heavy funds or multi-asset funds with 60–80% bonds (e.g. Vanguard LifeStrategy 20% Equity)',
+      'Consider a global bond index fund alongside a small equity allocation for growth',
+      'Choose a zero/low-fee platform: Trading 212, InvestEngine, or Freetrade for smaller balances',
+      'Keep total fees under 0.5% — lower turnover funds have lower costs',
+      'Set up a regular monthly investment and avoid checking daily — volatility will be low',
+    );
+  } else if (answers.riskTolerance === 'aggressive') {
+    base.push(
+      'Invest primarily in 100% equity global index funds (e.g. FTSE Global All Cap, S&P 500 ETF)',
+      'Consider adding a small-cap or emerging markets ETF for higher growth potential (10–20% of portfolio)',
+      'Choose a zero/low-fee platform: Trading 212, InvestEngine, or Freetrade for smaller balances',
+      'For larger portfolios (£50k+), consider flat-fee platforms like Interactive Investor (£5.99/mo)',
+      'Keep total fees under 1% — accept higher volatility for potentially higher long-term returns',
+      'Set up a regular monthly investment to benefit from pound-cost averaging through market dips',
+    );
+  } else {
+    // balanced (default)
+    base.push(
+      'Buy a balanced global index fund or ETF (e.g. Vanguard LifeStrategy 60% Equity, FTSE Global All Cap)',
+      'Choose a zero/low-fee platform: Trading 212, InvestEngine, or Freetrade for smaller balances',
+      'For larger portfolios (£50k+), consider flat-fee platforms like Interactive Investor (£5.99/mo)',
+      'Keep total fees under 1% (platform + fund fees combined)',
+      'Set up a regular monthly investment to benefit from pound-cost averaging',
+      'Rebalance once a year to maintain your target equity/bond split',
+    );
+  }
+
+  return base;
 }
 
 export function evaluatePhase(answers: SurveyAnswers): PhaseResult {
@@ -146,18 +184,11 @@ function buildResult(
       title: 'Begin Investing via Low-Fee Platforms',
       summary:
         current === 4
-          ? 'You are ready to invest. Focus on tax-efficient, low-fee, diversified approaches.'
+          ? `You are ready to invest. Your risk profile is ${answers.riskTolerance ?? 'balanced'} — recommendations are tailored accordingly.`
           : 'Complete earlier phases first.',
       actions:
         current === 4
-          ? [
-              'Open a Stocks & Shares ISA (20,000/year tax-free allowance)',
-              'Choose a zero/low-fee platform: Trading 212, InvestEngine, or Freetrade for smaller balances',
-              'For larger portfolios (50k+), consider flat-fee platforms like Interactive Investor (5.99/mo)',
-              'Buy global index funds or ETFs (e.g. FTSE Global All Cap, S&P 500 ETF) - not individual stocks',
-              'Keep total fees under 1% (platform + fund fees combined)',
-              'Set up a regular monthly investment to benefit from pound-cost averaging',
-            ]
+          ? getPhase4Actions(answers)
           : ['Complete earlier phases first'],
     },
   ];
@@ -174,6 +205,7 @@ function buildResult(
     monthlyEssentials: answers.monthlyEssentials,
     currentSavings: answers.currentSavings,
     incomeStability: answers.incomeStability,
+    riskTolerance: answers.riskTolerance,
   };
 }
 

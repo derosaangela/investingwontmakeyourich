@@ -119,6 +119,8 @@ function exportToPDF(result: PhaseResult) {
   y += 5;
   doc.text(`Income type: ${result.incomeStability === 'variable' ? 'Variable' : 'Stable'}`, margin + 4, y);
   y += 5;
+  doc.text(`Risk tolerance: ${(result.riskTolerance ?? 'balanced').charAt(0).toUpperCase() + (result.riskTolerance ?? 'balanced').slice(1)}`, margin + 4, y);
+  y += 5;
   doc.text(`Emergency fund target: ${formatGBP(result.emergencyTarget)} (${result.emergencyMonths} months)`, margin + 4, y);
   y += 5;
   if (result.savingsGap > 0) {
