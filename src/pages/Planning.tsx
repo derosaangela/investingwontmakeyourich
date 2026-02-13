@@ -65,7 +65,7 @@ const Planning = () => {
         </section>
 
         {/* Keep the allocation tool below for users who reach Phase 4 */}
-        {result && result.currentPhase === 4 && <PlanningSection />}
+        {result && result.currentPhase === 4 && <PlanningSection phaseResult={result} />}
       </main>
       <Footer />
     </div>

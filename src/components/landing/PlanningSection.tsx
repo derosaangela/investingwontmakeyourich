@@ -4,6 +4,7 @@ import { Slider } from '@/components/ui/slider';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { formatCurrency } from '@/utils/calculations';
 import { TrendingUp, Shield, Wallet, Landmark, AlertTriangle } from 'lucide-react';
+import { PhaseResult } from '@/components/planning/types';
 
 interface PlanningInputs {
   monthlyIncome: number;
@@ -34,32 +35,77 @@ interface Allocation {
   description: string;
 }
 
-function getAllocations(surplus: number, monthlyIncome: number): Allocation[] {
+function getAllocations(surplus: number, monthlyIncome: number, phaseResult?: PhaseResult): Allocation[] {
   if (surplus <= 0) return [];
 
-  const savingsRate = surplus / monthlyIncome;
+  const emergencyFunded = phaseResult ? phaseResult.savingsGap <= 0 : false;
+  const risk = phaseResult?.riskTolerance ?? 'balanced';
 
-  // Adjust allocation based on how much surplus there is
-  let emergency: number, conservative: number, growth: number, aggressive: number;
+  // If emergency fund is fully funded, allocate 0% to it and redistribute
+  let emergency: number;
+  let conservative: number;
+  let growth: number;
+  let aggressive: number;
 
-  if (savingsRate < 0.1) {
-    // Low surplus: prioritize emergency fund
-    emergency = 0.6;
-    conservative = 0.25;
-    growth = 0.15;
-    aggressive = 0;
-  } else if (savingsRate < 0.25) {
-    // Moderate surplus: balanced approach
-    emergency = 0.3;
-    conservative = 0.25;
-    growth = 0.3;
-    aggressive = 0.15;
+  if (emergencyFunded) {
+    emergency = 0;
+    if (risk === 'conservative') {
+      conservative = 0.55;
+      growth = 0.35;
+      aggressive = 0.10;
+    } else if (risk === 'aggressive') {
+      conservative = 0.10;
+      growth = 0.40;
+      aggressive = 0.50;
+    } else {
+      conservative = 0.25;
+      growth = 0.45;
+      aggressive = 0.30;
+    }
   } else {
-    // High surplus: more growth-oriented
-    emergency = 0.2;
-    conservative = 0.2;
-    growth = 0.35;
-    aggressive = 0.25;
+    // Emergency fund not yet funded — prioritise it
+    const savingsRate = surplus / monthlyIncome;
+    if (savingsRate < 0.1) {
+      emergency = 0.6;
+      conservative = 0.25;
+      growth = 0.15;
+      aggressive = 0;
+    } else if (savingsRate < 0.25) {
+      emergency = 0.35;
+      conservative = 0.20;
+      growth = 0.30;
+      aggressive = 0.15;
+    } else {
+      emergency = 0.25;
+      conservative = 0.20;
+      growth = 0.35;
+      aggressive = 0.20;
+    }
+  }
+
+  // Build descriptions based on risk tolerance
+  const emergencyDesc = emergencyFunded
+    ? 'Fully funded — no further contributions needed'
+    : phaseResult
+    ? `Save into a high-yield account until you reach ${formatGBP(phaseResult.emergencyTarget)} (${phaseResult.emergencyMonths} months of expenses)`
+    : 'High-yield savings account for 3–6 months of essential expenses';
+
+  let conservativeDesc: string;
+  let growthDesc: string;
+  let aggressiveDesc: string;
+
+  if (risk === 'conservative') {
+    conservativeDesc = 'Bond-heavy multi-asset funds (e.g. Vanguard LifeStrategy 20% Equity) via a Stocks & Shares ISA';
+    growthDesc = 'Global index tracker with moderate equity exposure (e.g. LifeStrategy 40–60%) for steady long-term growth';
+    aggressiveDesc = 'Small allocation to a broad equity index fund (e.g. FTSE Global All Cap) to capture some upside';
+  } else if (risk === 'aggressive') {
+    conservativeDesc = 'Keep a small bond/cash buffer in a Stocks & Shares ISA for rebalancing opportunities';
+    growthDesc = 'Core holding in 100% equity global index funds (e.g. FTSE Global All Cap, S&P 500 ETF)';
+    aggressiveDesc = 'Small-cap, emerging markets ETFs, or sector bets for higher growth potential';
+  } else {
+    conservativeDesc = 'Global bond index or multi-asset fund (e.g. LifeStrategy 40%) inside a Stocks & Shares ISA';
+    growthDesc = 'Diversified global equity index fund (e.g. FTSE Global All Cap) as your core long-term holding';
+    aggressiveDesc = 'Satellite allocation to growth-tilted ETFs (e.g. small-cap, tech) for additional upside';
   }
 
   return [
@@ -69,33 +115,42 @@ function getAllocations(surplus: number, monthlyIncome: number): Allocation[] {
       percentage: emergency * 100,
       color: 'hsl(0, 0%, 70%)',
       icon: Shield,
-      description: 'High-yield savings for 3–6 months of expenses',
+      description: emergencyDesc,
     },
     {
-      label: 'Conservative',
+      label: 'Low Risk',
       amount: surplus * conservative,
       percentage: conservative * 100,
       color: 'hsl(0, 0%, 55%)',
       icon: Landmark,
-      description: 'Bonds, index funds, low-volatility ETFs',
+      description: conservativeDesc,
     },
     {
-      label: 'Growth',
+      label: 'Medium Risk',
       amount: surplus * growth,
       percentage: growth * 100,
       color: 'hsl(0, 0%, 40%)',
       icon: TrendingUp,
-      description: 'Diversified equity funds, S&P 500, tech ETFs',
+      description: growthDesc,
     },
     {
-      label: 'Aggressive',
+      label: 'Higher Risk',
       amount: surplus * aggressive,
       percentage: aggressive * 100,
       color: 'hsl(0, 0%, 25%)',
       icon: Wallet,
-      description: 'Individual stocks, crypto, venture exposure',
+      description: aggressiveDesc,
     },
   ].filter((a) => a.amount > 0);
+}
+
+function formatGBP(value: number): string {
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
 }
 
 interface SliderFieldProps {
@@ -124,7 +179,11 @@ function SliderField({ label, value, max, step, onChange }: SliderFieldProps) {
   );
 }
 
-export function PlanningSection() {
+interface PlanningSectionProps {
+  phaseResult?: PhaseResult;
+}
+
+export function PlanningSection({ phaseResult }: PlanningSectionProps) {
   const [inputs, setInputs] = useState<PlanningInputs>(defaultInputs);
 
   const update = (key: keyof PlanningInputs, value: number) =>
@@ -136,7 +195,7 @@ export function PlanningSection() {
   );
 
   const surplus = inputs.monthlyIncome - totalSpending;
-  const allocations = useMemo(() => getAllocations(surplus, inputs.monthlyIncome), [surplus, inputs.monthlyIncome]);
+  const allocations = useMemo(() => getAllocations(surplus, inputs.monthlyIncome, phaseResult), [surplus, inputs.monthlyIncome, phaseResult]);
 
   const spendingBreakdown = [
     { name: 'Housing', value: inputs.housing, color: 'hsl(0, 0%, 65%)' },
