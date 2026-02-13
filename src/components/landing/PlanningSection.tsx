@@ -141,7 +141,7 @@ function getAllocations(surplus: number, monthlyIncome: number, phaseResult?: Ph
       icon: Wallet,
       description: aggressiveDesc,
     },
-  ].filter((a) => a.amount > 0);
+  ];
 }
 
 function formatGBP(value: number): string {
@@ -287,7 +287,7 @@ export function PlanningSection({ phaseResult }: PlanningSectionProps) {
                           {spendingBreakdown.map((s) => (
                             <div key={s.name} className="flex items-center gap-2 text-xs text-white/50">
                               <div className="w-2 h-2 rounded-full" style={{ background: s.color }} />
-                              {s.name}
+                              {s.name} · {Math.round((s.value / totalSpending) * 100)}%
                             </div>
                           ))}
                         </div>
@@ -297,11 +297,23 @@ export function PlanningSection({ phaseResult }: PlanningSectionProps) {
                     <Card className="bg-white/[0.02] border-white/5">
                       <CardContent className="p-6">
                         <p className="text-xs uppercase tracking-[0.15em] text-white/30 mb-4">Recommended Allocation</p>
+                        {phaseResult?.riskTolerance && (
+                          <div className="mb-4 p-3 rounded-lg bg-white/[0.03] border border-white/5">
+                            <p className="text-sm font-medium capitalize">{phaseResult.riskTolerance} Profile</p>
+                            <p className="text-xs text-white/40 mt-1">
+                              {phaseResult.riskTolerance === 'conservative'
+                                ? 'Prioritises capital preservation with bond-heavy, low-volatility funds.'
+                                : phaseResult.riskTolerance === 'aggressive'
+                                ? 'Maximises growth potential with high equity exposure and emerging markets.'
+                                : 'Balances growth and stability with a diversified equity and bond mix.'}
+                            </p>
+                          </div>
+                        )}
                         <div className="h-48">
                           <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
-                              <Pie data={allocations} dataKey="amount" nameKey="label" cx="50%" cy="50%" innerRadius={45} outerRadius={75} paddingAngle={2} strokeWidth={0}>
-                                {allocations.map((entry, i) => (
+                              <Pie data={allocations.filter(a => a.amount > 0)} dataKey="amount" nameKey="label" cx="50%" cy="50%" innerRadius={45} outerRadius={75} paddingAngle={2} strokeWidth={0}>
+                                {allocations.filter(a => a.amount > 0).map((entry, i) => (
                                   <Cell key={i} fill={entry.color} />
                                 ))}
                               </Pie>
@@ -316,7 +328,7 @@ export function PlanningSection({ phaseResult }: PlanningSectionProps) {
                           {allocations.map((a) => (
                             <div key={a.label} className="flex items-center gap-2 text-xs text-white/50">
                               <div className="w-2 h-2 rounded-full" style={{ background: a.color }} />
-                              {a.label}
+                              {a.label} · {Math.round(a.percentage)}%
                             </div>
                           ))}
                         </div>
