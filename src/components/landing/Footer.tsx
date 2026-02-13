@@ -5,10 +5,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand */}
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-white flex items-center justify-center">
-              <span className="text-black font-bold text-xs">N</span>
-            </div>
-            <span className="text-sm font-medium">nexus</span>
+            <span className="text-sm font-medium">investingwontmakeyourich</span>
           </div>
 
           {/* Links */}
@@ -21,7 +18,7 @@ export function Footer() {
 
           {/* Copyright */}
           <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} Nexus. For illustrative purposes.
+            © {new Date().getFullYear()} investingwontmakeyourich. For illustrative purposes.
           </p>
         </div>
       </div>
