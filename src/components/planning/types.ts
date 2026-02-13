@@ -92,20 +92,27 @@ function buildResult(
       title: 'Fund Your Emergency Savings',
       summary:
         current === 2
-          ? `You need ${emergencyMonths} months of essential expenses (${formatGBP(emergencyTarget)}) saved. You are ${formatGBP(savingsGap)} short.`
+          ? savingsGap <= 0
+            ? `Your emergency fund (${formatGBP(emergencyTarget)}) is fully funded. Stop contributing to emergency savings and invest the rest.`
+            : `You need ${emergencyMonths} months of essential expenses (${formatGBP(emergencyTarget)}) saved. You are ${formatGBP(savingsGap)} short.`
           : current > 2
           ? `Emergency fund of ${formatGBP(emergencyTarget)} is fully funded.`
           : 'Complete Phase 1 first.',
       actions:
         current === 2
-          ? [
-              `Target: ${formatGBP(emergencyTarget)} (${emergencyMonths} months x ${formatGBP(answers.monthlyEssentials)}/mo)`,
-              savingsGap > 0
-                ? `You still need ${formatGBP(savingsGap)} - start with a ${formatGBP(1000)} mini-goal if the full amount feels far off`
-                : 'Target reached',
-              'Set up an automatic monthly transfer on payday',
-              'Only count essential expenses: rent, utilities, groceries, transport',
-            ]
+          ? savingsGap <= 0
+            ? [
+                `You have ${formatGBP(answers.currentSavings)} saved - enough to cover ${emergencyMonths} months of expenses.`,
+                'Set this amount aside in an easy-access account (Phase 3).',
+                'Going forward, contribute £0 per month to emergency savings.',
+                'Redirect all new surplus income to investing (Phase 4).',
+              ]
+            : [
+                `Target: ${formatGBP(emergencyTarget)} (${emergencyMonths} months x ${formatGBP(answers.monthlyEssentials)}/mo)`,
+                `You still need ${formatGBP(savingsGap)} - start with a ${formatGBP(1000)} mini-goal if the full amount feels far off`,
+                'Set up an automatic monthly transfer on payday.',
+                'Only count essential expenses: rent, utilities, groceries, transport.',
+              ]
           : current > 2
           ? ['Completed']
           : ['Complete Phase 1 first'],
