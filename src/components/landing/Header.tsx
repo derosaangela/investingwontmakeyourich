@@ -11,10 +11,7 @@ export function Header({ onGetStarted }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-white flex items-center justify-center">
-              <span className="text-black font-bold text-sm">N</span>
-            </div>
-            <span className="text-lg font-semibold tracking-tight">nexus</span>
+            <span className="text-lg font-semibold tracking-tight">investingwontmakeyourich</span>
           </div>
 
           {/* Navigation */}
