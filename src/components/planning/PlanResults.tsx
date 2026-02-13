@@ -113,12 +113,18 @@ function exportToPDF(result: PhaseResult) {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(60);
+  doc.text(`Monthly essential expenses: ${formatGBP(result.monthlyEssentials)}`, margin + 4, y);
+  y += 5;
+  doc.text(`Current savings: ${formatGBP(result.currentSavings)}`, margin + 4, y);
+  y += 5;
+  doc.text(`Income type: ${result.incomeStability === 'variable' ? 'Variable' : 'Stable'}`, margin + 4, y);
+  y += 5;
   doc.text(`Emergency fund target: ${formatGBP(result.emergencyTarget)} (${result.emergencyMonths} months)`, margin + 4, y);
   y += 5;
   if (result.savingsGap > 0) {
     doc.text(`Remaining gap: ${formatGBP(result.savingsGap)}`, margin + 4, y);
   } else {
-    doc.text('Emergency fund: Fully funded', margin + 4, y);
+    doc.text('Emergency fund: Fully funded ✓', margin + 4, y);
   }
 
   // Footer
@@ -220,6 +226,38 @@ export function PlanResults({ result, onReset }: Props) {
           </Card>
         ))}
       </div>
+
+      {/* Emergency Fund Summary */}
+      <Card className="bg-white/[0.02] border-white/5">
+        <CardContent className="p-6">
+          <h4 className="text-sm font-semibold mb-4">Emergency Fund Overview</h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Monthly Essentials</p>
+              <p className="text-sm font-semibold tabular-nums">{formatGBP(result.monthlyEssentials)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Current Savings</p>
+              <p className="text-sm font-semibold tabular-nums">{formatGBP(result.currentSavings)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Target ({result.emergencyMonths}mo)</p>
+              <p className="text-sm font-semibold tabular-nums">{formatGBP(result.emergencyTarget)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">
+                {result.savingsGap > 0 ? 'Gap Remaining' : 'Status'}
+              </p>
+              <p className={`text-sm font-semibold tabular-nums ${result.savingsGap <= 0 ? 'text-emerald-400' : ''}`}>
+                {result.savingsGap > 0 ? formatGBP(result.savingsGap) : 'Fully Funded'}
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Income type: {result.incomeStability === 'variable' ? 'Variable — 6 months recommended' : 'Stable — 3 months recommended'}
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Footer */}
       <div className="flex items-center justify-center gap-4 pt-4">
