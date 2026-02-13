@@ -5,6 +5,7 @@ Check how much you'll have if you start investing today
 ## Project info
 
 See your money compunding. Understand how much the little you save today will be in X months, years. 
+Browser: grow-wise-toolkit.lovable.app
 
 ## What technologies are used for this project?
 
