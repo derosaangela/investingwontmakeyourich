@@ -66,7 +66,7 @@ export function Hero({ onGetStarted }: HeroProps) {
               <p className="text-xs md:text-sm text-white/40 mt-2 uppercase tracking-wider">Users</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold tracking-tight">99.9%</p>
+              <p className="text-3xl md:text-4xl font-bold tracking-tight">99%</p>
               <p className="text-xs md:text-sm text-white/40 mt-2 uppercase tracking-wider">Accuracy</p>
             </div>
           </div>
